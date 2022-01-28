@@ -18,9 +18,12 @@
 package vanetsim.map;
 
 import java.awt.Color;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -271,12 +274,8 @@ public final class Map{
 					if(newMapWidth > 0 && newMapHeight > 0 && newRegionWidth > 0 && newRegionHeight > 0){		// only continue if settings were all found
 						if(!Renderer.getInstance().isConsoleStart())VanetSimStart.setProgressBar(false);
 						CyclicBarrier barrier = new CyclicBarrier(2);
-						if(!Renderer.getInstance().isConsoleStart()){
-							
+						if(!Renderer.getInstance().isConsoleStart()){						
 							new MapSizeDialog(newMapWidth, newMapHeight, newRegionWidth, newRegionHeight, barrier);	//initialize new map
-							//try {
-						//		barrier.await();
-						//	} catch (Exception e) {}
 						}
 						else Map.getInstance().initNewMap(newMapWidth, newMapHeight, newRegionWidth, newRegionHeight);
 						int addX = (width_ - newMapWidth)/2;
@@ -998,7 +997,6 @@ public final class Map{
 		if(value.equals("school")) n.setNodeColor(Color.yellow);
 		else if(value.equals("kindergarten")) n.setNodeColor(Color.green);
 		else if(value.equals("hospital")) n.setNodeColor(Color.magenta);
-	//	else if(value.equals("driving_school")) n.setNodeColor(Color.orange);
 		else if(value.equals("police")) n.setNodeColor(Color.blue);
 		else if(value.equals("fire_station")) n.setNodeColor(Color.red);
 
@@ -1111,5 +1109,45 @@ public final class Map{
 		this.mapName_ = mapName_;
 	}
 	
+	
+	/**
+	 * displays amount of vehicles per region
+	 */
+	public void printVehiclesPerRegion(){
+		int counter = 0;
+		for(int i = 0; i < regionCountY_; ++i){
+			for(int j = 0; j < regionCountX_; ++j){
+				System.out.print(regions_[j][i].getVehicleArrayList().size() + ",");
+				counter++;
+			}
+			System.out.println();
+		}
+		
+		System.out.println("Counter: " + counter);
+	}
+	
+	/**
+	 * save vehicle coordinates to file
+	 */
+	public void saveVehicles(){
+		 FileWriter fstream;
+         try {
+			fstream = new FileWriter("vehicleCoords.log", true);
+			BufferedWriter out = new BufferedWriter(fstream);
+
+			for(int i = 0; i < regionCountY_; ++i){
+				for(int j = 0; j < regionCountX_; ++j){
+					for(Vehicle vehicle:regions_[j][i].getVehicleArrayList()) out.write(vehicle.getX() + " " + vehicle.getY() + "\n");
+				}
+			}
+			out.flush();
+			out.close();
+ 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+	
+	}
 	
 }

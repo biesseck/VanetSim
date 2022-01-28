@@ -22,7 +22,6 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.io.FileInputStream;
@@ -33,6 +32,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 // import com.apple.eawt.Application;    // COMENTADO POR BERNARDO
+
 
 import vanetsim.gui.DrawingArea;
 import vanetsim.gui.Renderer;
@@ -98,6 +98,8 @@ public final class VanetSimStart implements Runnable {
 		
 		/* COMENTADO POR BERNARDO
 		boolean isMacOs = osName.startsWith("mac os x");
+		//leads to some issues on linux
+		/*
 		if (isMacOs) 
 		{
 			Application application = Application.getApplication();
