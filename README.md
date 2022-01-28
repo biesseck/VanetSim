@@ -1,14 +1,33 @@
+PLVR: Informações Importantes
+========
+
+**Clonar repositório:**
+`git clone https://github.com/biesseck/VanetSim.git`
+
+**Abrir repositório no IDE Eclipse:**
+  - Menu File -> Open Projects from File System
+  - Directory
+  - Select `VanetSim` folder
+  - Finish
+
+**Main file:**
+  - vanetsim.VanetSimStarter.java
+
+**Executar simulação:**
+  - Execute o projeto VanetSim (dentro do Eclipse)
+  - Load map -> selecione `VanetSim/NewYork_noTS.xml` (ou `Berlin_noTS.xml` ou `Puebla_noTS.xml`)
+  - Load scenario -> selecione `VanetSim/Scenarios/NewYork_noTS_2500slowVehicles_2500fastVehicles_SilentPeriods.xml` (ou `Berlin_noTS_5000vehicles_withMix-Zones.xml` ou `Puebla_noTS_5000vehicles_withMix-Zones_LogActivated.xml`)
+  - Start
+
+
+
+VanetSim (from original repository)
+========
+
 **Important note**
 The VANETsim project is closed. The software is no longer maintained.
 
-VanetSim
-========
-
 VANETsim: A simulator for security and privacy concepts in VANETs
-
-
--- You will find the current version in the "develop"-branch! --
-
 
 This repository is used for active development of the VANETSim (the "develop" branch). For ready to use packages of --> http://www.vanet-simulator.org
 
