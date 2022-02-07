@@ -18,7 +18,7 @@
 			<ARSULog></ARSULog>
 			<ARSUEncryptedLoggingEnabled>false</ARSUEncryptedLoggingEnabled>
 			<privacyLoggingEnabled>false</privacyLoggingEnabled>
-			<SilentPeriodsEnabled>true</SilentPeriodsEnabled>
+			<SilentPeriodsEnabled>false</SilentPeriodsEnabled>
 			<SilentPeriodDuration>5000</SilentPeriodDuration>
 			<SilentPeriodFrequency>20000</SilentPeriodFrequency>
 			<showEncryptedCommInMix>false</showEncryptedCommInMix>

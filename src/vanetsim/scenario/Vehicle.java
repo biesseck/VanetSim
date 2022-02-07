@@ -44,6 +44,7 @@ import vanetsim.routing.WayPoint;
 import vanetsim.routing.A_Star.A_Star_Algorithm;
 import vanetsim.scenario.events.BlockingObject;
 import vanetsim.scenario.messages.Message;
+import vanetsim.scenario.messages.PLVR_Message;
 import vanetsim.scenario.messages.PenaltyMessage;
 
 /**
@@ -2522,6 +2523,9 @@ public class Vehicle extends LaneObject{
 							dy = nearestVehicle.getY() - curY_;
 							if((dx * dx + dy * dy) < maxCommSquared){	//check if vehicle really is in communication distance
 								//nearestVehicle.setColor(Color.red);
+								
+								// TESTE BERNARDO
+								System.out.println("teste 3 - Vehicle.java - sendMessages() - receiving message: " + ((PLVR_Message)messages[i]).getText());
 								nearestVehicle.receiveMessage(curX_, curY_, messages[i]);
 							}
 							next = next.getNext();
@@ -2658,6 +2662,10 @@ public class Vehicle extends LaneObject{
 	 * @param message	the message
 	 */
 	public final void receiveMessage(int sourceX, int sourceY, Message message){
+		
+		// TESTE BERNARDO
+		System.out.println("teste 10 - Vehicle.java - receiveMessage() - message: " + ((PLVR_Message)message).getText());
+		
 		long dx = message.getDestinationX_() - curX_;
 		long dy = message.getDestinationY_() - curY_;
 		long distanceToDestinationSquared = dx*dx + dy*dy;
@@ -2811,11 +2819,17 @@ public class Vehicle extends LaneObject{
 							dx = vehicle.getX() - curX_;
 							dy = vehicle.getY() - curY_;
 							if((dx * dx + dy * dy) <= maxCommDistanceSquared){	// Pythagorean theorem: a^2 + b^2 = c^2 but without the needed Math.sqrt to save a little bit performance
+								
+								// TESTE BERNARDO
+								System.out.println("teste 1 - Vehicle.java - sendBeacons() - (dx: " + dx + ", dy: " + dy + ")  (curX_: " + curX_ + ", curY_: " + curY_ + ") - emergencyBeacons: " + emergencyBeacons);
+								
 								if(emergencyBeacons > 0){
 									vehicle.getIdsProcessorList_().updateProcessor((ID_-1), curX_, curY_, curSpeed_, curLane_);
 									vehicle.getKnownVehiclesList().updateVehicle(this, (ID_-1), curX_, curY_, curSpeed_, vehicle.getID(), false,false);
 								}
-								else if (emergencyBeacons == 0){
+								
+								// else if (emergencyBeacons == 0){   // ORIGINAL. COMENTADO POR BERNARDO
+								else if (emergencyBeacons <= 0){   // TESTE BERNARDO
 									//fake messages
 									
 									// find the destination for the message. Will be sent to the next junction behind us! (if its pcn we send it in front)
@@ -2854,13 +2868,22 @@ public class Vehicle extends LaneObject{
 										}
 									} while(tmpStreet2 != curStreet_ && l < 10000);	//hard limit of 10000 nodes to maximally go back or if again arriving at source street (=>circle!)
 									// found destination...now insert into messagequeue
+																		
 									if(destX != -1 && destY != -1){
 										int direction = -1;
 										int time = Renderer.getInstance().getTimePassed();
 										
+										/* COMENTADO POR BERNARDO
 										PenaltyMessage message = new PenaltyMessage(curX_, curY_, destX, destY, PENALTY_FAKE_MESSAGE_RADIUS, time + PENALTY_MESSAGE_VALID, curStreet_, curLane_, direction, PENALTY_MESSAGE_VALUE, time + PENALTY_VALID, true, (ID_-1), this,  "EVA_EMERGENCY_ID", true, true);
 										message.setFloodingMode(true);	// enable flooding mode if within distance!				
 										knownMessages_.addMessage(message, false, true);	
+										*/
+										
+										// TESTE BERNARDO
+										PLVR_Message message = new PLVR_Message("I'm " + ID_);
+										message.setFloodingMode(true);	// enable flooding mode if within distance!				
+										System.out.println("teste 2 - Vehicle.java - sendBeacons() - adding new PLVR Message...");
+										knownMessages_.addMessage(message, false, false);
 										
 										emergencyBeacons = -1;								
 									}		

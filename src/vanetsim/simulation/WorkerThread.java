@@ -213,13 +213,21 @@ public final class WorkerThread extends Thread {
 				if(communicationEnabled){
 					try{
 						//vehicles send messages
-					
 						for(i = 0; i < ourRegionsLength; ++i){
 							vehicleSubarray = vehicles[i];
 							length = vehicleSubarray.length;
 							for(j = 0; j < length; ++j){
 								vehicle = vehicleSubarray[j];
-								if(vehicle.isActive() && vehicle.isWiFiEnabled() && vehicle.getCommunicationCountdown() < 1){
+								
+								// TESTE BERNARDO
+								System.out.println("teste 1 - WorkerThread.java - run() - vehicle.getCommunicationCountdown(): " + vehicle.getCommunicationCountdown());
+								
+								// if(vehicle.isActive() && vehicle.isWiFiEnabled() && vehicle.getCommunicationCountdown() < 1){   // COMENTADO POR BERNARDO
+								if(vehicle.isActive() && vehicle.isWiFiEnabled()){   // TESTE BERNARDO
+								
+									// TESTE BERNARDO
+									System.out.println("teste 2 - WorkerThread.java - run() - sending messages...");
+									
 									vehicle.sendMessages();
 								}
 							}
